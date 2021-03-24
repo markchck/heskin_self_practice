@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.2'
+ruby '2.6.5'
 
 # mark
 gem 'devise'
 gem 'activeadmin'
-gem 'bootstrap'
+gem 'bootstrap', '~> 4.5.0'
 gem 'jquery-rails'
 
 
