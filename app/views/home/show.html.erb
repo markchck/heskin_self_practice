@@ -3,13 +3,13 @@
 
     <div class="card col card_control" style="width: 18rem;">
       <% if @pack.image.attached? %>
-        <%= image_tag url_for(@pack.image), class: "card-img-top" %> <hr>
+        <%= image_tag url_for(@pack.image), class: "card-img-top img-fluid" %> <hr>
       <%else%>
         <%= "이미지 없음" %> <hr>
       <%end%>
     </div>
 
-    <div>
+    <div class="col">
       <h3 class="card-title"><%=@pack.product_name%></h3>
       <h4>가격</h4> 
       <p class="card-text"><%=@pack.price%></p>

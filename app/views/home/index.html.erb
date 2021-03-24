@@ -1,4 +1,7 @@
-<div class="container">
+<%# carousel 캐로셀  %>
+<%= render :partial => '/layouts/carousel.erb' %> <br> 
+
+<div class="container" style="margin-left: 27%; margin-right: auto;">
   <div class="row row-cols-4 mt-4">
     <% @pack.each do |pack| %>
         <div class="card col card_control mr-4 mb-4" style="width: 18rem;">

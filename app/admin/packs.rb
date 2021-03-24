@@ -4,6 +4,8 @@ ActiveAdmin.register Pack do
       pack.input :image, as: :file
       pack.input :product_name
       pack.input :desc
+      pack.input :price
+  
     end
     pack.actions
   end
@@ -20,6 +22,9 @@ ActiveAdmin.register Pack do
       end
       row :product_name
       row :desc
+      row :price do |pack|
+        number_to_currency(pack.price)
+      end
     end
   end
 
@@ -36,6 +41,9 @@ ActiveAdmin.register Pack do
     end
     column :product_name
     column :desc
+    column :price do |pack|
+      number_to_currency(pack.price)
+    end
     actions
   end
 end
