@@ -1,11 +1,15 @@
 ActiveAdmin.register Pack do
+	scope :all
+	scope -> {"공개"}, :published, default:true
+	scope -> {"비공개"}, :unpublished
+	
   form do |pack|
     pack.inputs do
       pack.input :image, as: :file
       pack.input :product_name
       pack.input :desc
-      pack.input :price
-  
+      pack.input :price, hint: "실제 판매 가격을 입력해주세요"
+			pack.input :is_publish
     end
     pack.actions
   end
@@ -25,6 +29,7 @@ ActiveAdmin.register Pack do
       row :price do |pack|
         number_to_currency(pack.price)
       end
+			row :is_publish
     end
   end
 
@@ -44,6 +49,7 @@ ActiveAdmin.register Pack do
     column :price do |pack|
       number_to_currency(pack.price)
     end
+		column :is_publish
     actions
   end
 end

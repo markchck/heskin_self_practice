@@ -1,7 +1,7 @@
 <%# carousel 캐로셀  %>
 <%= render :partial => '/layouts/carousel.erb' %> <br> 
 
-<div class="container" style="margin-left: 27%; margin-right: auto;">
+<div class="container" style="margin-left: 15%;">
   <div class="row row-cols-4 mt-4">
     <% @pack.each do |pack| %>
         <div class="card col card_control mr-4 mb-4" style="width: 18rem;">
@@ -13,7 +13,7 @@
           <div class="card-body">
             <h5 class="card-title"><%=pack.product_name%></h5>
             <p class="card-text"><%=pack.desc%></p>
-            <a href="/show/<%=pack.id%>" class="btn btn-primary">상세보기</a>
+            <a href="/packs/<%=pack.id%>" class="btn btn-primary">상세보기</a>
           </div>
         </div>
     <%end%>
