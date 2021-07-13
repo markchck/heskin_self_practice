@@ -1,0 +1,74 @@
+<h2> <%=current_user.email%>님의 장바구니 </h2>
+
+<!--카트 가격 수량 표로 보여주기  -->
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">팩</th>
+      <th scope="col">개수</th>
+      <th scope="col">가격</th>
+			<th scope="col">삭제</th>
+    </tr>
+  </thead>
+  <tbody>
+		<%@carts.each.with_index(1) do |cart, index| %>
+    	<tr>
+				<th scope="row"><%=index%></th>
+				<td><%=cart.pack.product_name%></td>
+				<td><%=cart.quantity%></td>
+				<td><%=cart.quantity*cart.pack.price%></td>
+				<td><a href="/carts/<%=cart.id%>" data-method="delete" data-confirm="삭제하시겠습니까?">삭제</a></td>
+    	</tr>
+		<%end %>
+  </tbody>
+</table>
+
+<br><br>
+
+<!--주문가격 계산해서 보여주기  -->
+<div class="card">
+  <h5 class="card-header">결재 금액</h5>
+	
+	<div class= "row">	
+		<div class="col d-flex justify-content-between">
+			<h5>상품합계</h5>
+		</div>
+		<div class="col d-flex justify-content-between">
+			<h5><%= number_to_currency(@sumCart) %></h5>
+		</div>
+	</div>
+
+	<div class= "row">	
+		<div class="col d-flex justify-content-between">
+			<h5>배송비</h5>
+		</div>
+		<div class="col d-flex justify-content-between ml - 5">
+			<h5><%= number_to_currency(@shipping_fee) %> </h5>
+		</div>
+	</div>
+	
+	<div class= "row">	
+		<div class="col d-flex justify-content-between">
+			<h5>합계</h5>
+		</div>
+		<div class="col d-flex justify-content-between ml - 5">
+			<h5><%= number_to_currency(@sumCart + @shipping_fee) %> </h5>
+		</div>
+	</div>
+</div>
+
+<!--order 컨트롤러로 주문하는데 필요한 정보 넘기기  -->
+<form action="/orders" method="post">
+	<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+	
+	<% @carts.each do |cart| %>
+		<input type="hidden" name="cart_id[]" value="<%= cart.id%>">
+	<%end%>
+	
+	<button type="submit" class="btn btn-primary" style="width: 100%;">
+		주문하기
+	</button>		
+</form>
+	
+

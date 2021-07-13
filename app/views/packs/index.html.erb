@@ -5,10 +5,10 @@
   <div class="row row-cols-4 mt-4">
     <% @pack.each do |pack| %>
         <div class="card col card_control mr-4 mb-4" style="width: 18rem;">
-          <% if pack.image.attached? %>
+          <% if pack.image.attached?%>
             <%= image_tag url_for(pack.image), class: "card-img-top height" %> <hr>
           <%else%>
-            <%= "이미지 없음" %> <hr>
+						<%= image_tag url_for("https://dummyimage.com/640x360/fff/aaa?text=No+Image"), class: "card-img-top height" %> <hr>
           <%end%>
           <div class="card-body">
             <h5 class="card-title"><%=pack.product_name%></h5>

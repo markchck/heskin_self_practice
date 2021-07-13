@@ -1,7 +1,46 @@
 ActiveAdmin.register Pack do
-	scope :all
-	scope -> {"공개"}, :published, default:true
-	scope -> {"비공개"}, :unpublished
+	skip_before_action :verify_authenticity_token, raise: false
+	
+	scope :all, default: true
+	scope :published
+	scope :un_published
+	
+	batch_action :published do |ids|
+		@packs = Pack.where(id: ids)
+		@packs.each do |pack|
+			pack.update(is_publish: true)
+		end
+		flash[:notice] = "#{@packs.count}개의 마스크 팩이 공개 처리되었습니다."
+		redirect_back(fallback_location: root_path)
+	end
+	
+	batch_action :unpublish do |ids|
+		@packs = Pack.where(id: ids)
+		@packs.each do |pack|
+			pack.update(is_publish: false)
+		end
+		flash[:notice] = "#{@packs.count}개의 마스크 팩이 비공개 처리되었습니다."
+		redirect_to collection_path, alert: "The posts have been flagged."
+		# redirect_back(fallback_location: root_path)
+	end
+	
+	# batch_action :flag do |ids|
+	# 	batch_action_collection.find(ids).each do |pack|
+	# 		pack.update(is_publish: true)
+	# 		pack.is_publish :true
+	# 	end
+	# 	redirect_to collection_path, alert: "The posts have been flagged."
+	# end
+	
+	# batch_action :unflag do |ids|
+	# 	batch_action_collection.find(ids).each do |pack|
+	# 		pack.update(is_publish: false)
+	# 	end
+	# 	redirect_to collection_path, alert: "The posts have been unflagged."
+	# end
+
+	
+	
 	
   form do |pack|
     pack.inputs do
@@ -21,7 +60,7 @@ ActiveAdmin.register Pack do
         if pack.image.attached?
             image_tag url_for(pack.image)
         else
-            "이미지 없음"
+            image_tag url_for("https://dummyimage.com/640x360/fff/aaa")
         end
       end
       row :product_name
@@ -41,7 +80,7 @@ ActiveAdmin.register Pack do
       if pack.image.attached?
         image_tag url_for(pack.image), class: "small_img"
       else
-        "이미지 없음"
+        image_tag url_for("https://dummyimage.com/640x360/fff/aaa"), class: "small_img"
       end
     end
     column :product_name

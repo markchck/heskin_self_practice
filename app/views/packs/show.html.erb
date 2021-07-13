@@ -1,11 +1,13 @@
 <div class="container">
   <div class="row row-cols-2 mt-3">
 
+
+
     <div class="card col card_control" style="width: 18rem;">
       <% if @pack.image.attached? %>
         <%= image_tag url_for(@pack.image), class: "card-img-top img-fluid" %> <hr>
       <%else%>
-        <%= "이미지 없음" %> <hr>
+        <%= image_tag url_for("https://dummyimage.com/640x360/fff/aaa?text=No+Image"), class: "card-img-top img-fluid" %> <hr>
       <%end%>
     </div>
 
@@ -15,7 +17,31 @@
       <p class="card-text"><%=@pack.price%></p>
       <h4>제품 설명</h4>
       <p class="card-text"><%=@pack.desc%></p>
-    </div>
+    </div> <br>
+		
+		<h3>
+			개수 선택
+		</h3>
+		
+		<form action="/carts" method="post">
+			<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+			<input type="hidden" name="pack_id" value="<%=@pack.id%>">
+			<div class="mb-3">
+				<input type="number" name="quantity" class="form-control" value= 1>
+			</div>
 
+			<button type="submit" class="btn btn-primary">장바구니에 담기</button>
+		</form>
+		
   </div>
 </div>
+
+<script>
+	<%if flash[:notice].present? %>
+		checkFlash = confirm("<%=flash[:notice]%>")
+		if (checkFlash==true){
+			location.href="/carts"
+		}		
+	<%end%>
+</script>
+

@@ -1,4 +1,5 @@
 ActiveAdmin.register AdminUser do
+	skip_before_action :verify_authenticity_token, raise: false
   permit_params :email, :password, :password_confirmation
 
   index do
