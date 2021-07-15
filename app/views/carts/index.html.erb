@@ -1,4 +1,4 @@
-<h2> <%=current_user.email%>님의 장바구니 </h2>
+<h2> <%= current_user.email %> 님의 장바구니 </h2>
 
 <!--카트 가격 수량 표로 보여주기  -->
 <table class="table">
@@ -64,7 +64,7 @@
 	
 	<% @carts.each do |cart| %>
 		<input type="hidden" name="cart_id[]" value="<%= cart.id%>">
-	<%end%>
+	<% end %>
 	
 	<button type="submit" class="btn btn-primary" style="width: 100%;">
 		주문하기
