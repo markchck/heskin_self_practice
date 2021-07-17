@@ -26,37 +26,45 @@
 
 <br><br>
 
-<!--주문가격 계산해서 보여주기  -->
-<div class="card">
-  <h5 class="card-header">결재 금액</h5>
-	
-	<div class= "row">	
-		<div class="col d-flex justify-content-between">
-			<h5>상품합계</h5>
-		</div>
-		<div class="col d-flex justify-content-between">
-			<h5><%= number_to_currency(@sumCart) %></h5>
-		</div>
-	</div>
 
-	<div class= "row">	
-		<div class="col d-flex justify-content-between">
-			<h5>배송비</h5>
+<%if @carts.present?%>
+	<!--주문가격 계산해서 보여주기  -->
+	<div class="card">
+		<h5 class="card-header">결재 금액</h5>
+		
+		<div class= "row">	
+			<div class="col d-flex justify-content-between">
+				<h5>상품합계</h5>
+			</div>
+			<div class="col d-flex justify-content-between">
+				<h5><%= number_to_currency(@sumCart) %></h5>
+			</div>
 		</div>
-		<div class="col d-flex justify-content-between ml - 5">
-			<h5><%= number_to_currency(@shipping_fee) %> </h5>
+
+		<div class= "row">	
+			<div class="col d-flex justify-content-between">
+				<h5>배송비</h5>
+			</div>
+			<div class="col d-flex justify-content-between ml - 5">
+				<h5><%= number_to_currency(@shipping_fee) %> </h5>
+			</div>
+		</div>
+		
+		<div class= "row">	
+			<div class="col d-flex justify-content-between">
+				<h5>합계</h5>
+			</div>
+			<div class="col d-flex justify-content-between ml - 5">
+				<h5><%= number_to_currency(@sumCart + @shipping_fee) %> </h5>
+			</div>
 		</div>
 	</div>
-	
-	<div class= "row">	
-		<div class="col d-flex justify-content-between">
-			<h5>합계</h5>
-		</div>
-		<div class="col d-flex justify-content-between ml - 5">
-			<h5><%= number_to_currency(@sumCart + @shipping_fee) %> </h5>
-		</div>
-	</div>
-</div>
+<% else %>
+	<script>
+		alert("장바구니가 비었습니다.")
+		location.href="/"
+	</script>
+<% end %>
 
 <!--order 컨트롤러로 주문하는데 필요한 정보 넘기기  -->
 <form action="/orders" method="post">

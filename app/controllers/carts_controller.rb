@@ -3,8 +3,6 @@ class CartsController < ApplicationController
 	
 	def index
 		@carts = current_user.carts.order(created_at: :desc)
-		
-				
 		currentCarts = current_user.carts
 		@sumCart = 0 
 		currentCarts.each do |cart|

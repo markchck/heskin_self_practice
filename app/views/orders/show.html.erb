@@ -1,0 +1,66 @@
+<div class = "container">
+  <div class="row mt-4">
+    <div class = "col-12">
+      <h3>주문정보 확인</h3>
+      <% @order.order_items.each do |item| %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title"><%= item.pack.product_name%>  </h5>
+            <h6 class="card-subtitle mb-2 text-muted"><%= item.pack.desc%> </h6>
+            <p class="card-text"> 수량: <%= item.quantity%> </p>
+            <p class="card-text"> 가격: <%= number_to_currency(item.quantity * item.pack.price) %> </p>
+            <a href="#" class="card-link">수정</a>
+            <a href="#" class="card-link">삭제</a>
+          </div>
+        </div>
+      <% end %>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-12">
+    <h3>배송정보 확인</h3>
+      <form>
+        <div class="mb-3">
+          <label for="name" class="form-label">받는 분 성함</label>
+          <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">연락처</label>
+          <input type="text" class="form-control" id="phone" name="phone">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">이메일</label>
+          <input type="email" class="form-control" id="email" name="email">
+        </div>
+
+        <div class="mb-3">
+          <label for="adress" class="form-label">주소</label>
+          <a href="#" id="search_address_btn"> (주소 검색하기) </a>
+          <input type="text" class="form-control" id="post_code" name="post_code" placeholder="우편번호">
+          <input type="text" class="form-control" id="address_1" name="address_1" placeholder="주소">
+          <input type="text" class="form-control" id="address_2" name="address_2" placeholder="상세주소">
+        </div>
+
+        <button type="submit" class="btn btn-primary">결제하기</button>
+      </form>
+  </div>
+</div>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+
+  $("#search_address_btn").on("click", function (e) {
+    e.preventDefault();
+    postCodePopup();
+  })
+
+  function postCodePopup() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+          $("#post_code").val(data.zonecode)
+          $("#address_1").val(data.roadAddress)
+        }
+    }).open();
+  }
+</script>

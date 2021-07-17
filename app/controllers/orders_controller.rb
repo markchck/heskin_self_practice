@@ -9,6 +9,7 @@ class OrdersController < ApplicationController
       #order_item을 만들어야 주문자(order)와 팩(pack)을 이어주니까.
       #주문자와 팩이 있어야 주문 정보 페이지를 만들 수 있으니까.
     end
+    carts.destroy_all
     redirect_to "/orders/#{order.id}"
     #다른 페이지로 넘어가는게 꼭 a 태그, form태그만 있는게 아니구나! (redirect to 써서 컨트롤러 단계에서도 가능)
   end
