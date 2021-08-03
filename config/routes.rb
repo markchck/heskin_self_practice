@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'packs#index'
+  
   get 'orders/create'
   get 'orders/show'
   get 'carts/create'
@@ -8,8 +10,8 @@ Rails.application.routes.draw do
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  root 'packs#index'
+  
   resources :packs, only: [:index, :show]
 	resources :carts, only: [:index, :create, :destroy]
-	resources :orders, only: [:create, :show]
+	resources :orders, only: [:create, :show, :index]
 end

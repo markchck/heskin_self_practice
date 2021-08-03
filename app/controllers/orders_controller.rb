@@ -16,6 +16,23 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
+    # @product_price = 0
+    # @order.order_items.each do |order_item|
+    #   @product_price += order_item.quantity * order_item.pack.price
+    # end
 
+    # if @product_price > 15000
+    #   @shipping_fee = 0
+    # else
+    #   @shipping_fee = 2500      
+    # end
+
+    # @total_price = @product_price + @shipping_fee
+
+
+  end
+
+  def index
+    @orders = current_user.orders
   end
 end

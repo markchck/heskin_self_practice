@@ -20,7 +20,8 @@
 <div class="row mt-4">
   <div class="col-12">
     <h3>배송정보 확인</h3>
-      <form>
+      <form action="" method="">
+        <%# 이거 form 태그 미완성인데 뭔가 이유가 있나봄? %>
         <div class="mb-3">
           <label for="name" class="form-label">받는 분 성함</label>
           <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp">
@@ -37,30 +38,128 @@
         <div class="mb-3">
           <label for="adress" class="form-label">주소</label>
           <a href="#" id="search_address_btn"> (주소 검색하기) </a>
-          <input type="text" class="form-control" id="post_code" name="post_code" placeholder="우편번호">
-          <input type="text" class="form-control" id="address_1" name="address_1" placeholder="주소">
-          <input type="text" class="form-control" id="address_2" name="address_2" placeholder="상세주소">
+          <input type="text" class="form-control" id="post_code" name="post_code" placeholder="우편번호"> <br>
+          <input type="text" class="form-control" id="address_1" name="address_1" placeholder="주소"> <br>
+          <input type="text" class="form-control" id="address_2" name="address_2" placeholder="상세주소(동, 호수)"> <br>
         </div>
 
-        <button type="submit" class="btn btn-primary">결제하기</button>
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <p>주문 금액 합계</p>
+                  <p><%= number_to_currency(@order.product_price) %></p>
+                </div>
+                <div>
+                  <p>배송비</p>
+                  <p class="font-weight-bold">*15,000원 이상 주문 시 무료배송</p>
+                  <p class="ml-5">배송비 <%= number_to_currency(@order.shipping_fee) %></p>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="d-flex justify-content-between mt-3">
+                  <h5 class="card-title">최종 결제 금액</h5>
+                  <p class="card-text"><%= number_to_currency(@order.total_price) %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <button id="requestPay" class="btn btn-warning w-100 my-5 shadow">결제하기</button>
+            <%# <a href="#" class="btn btn-warning w-100 my-5 shadow">결제하기</a> %>
+          </div>
+        </div>
+
       </form>
   </div>
 </div>
 
+<%# 결제 api cdn%>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
+<%# 결제 로직%>
+<script>
+  function PaymentPopUP(params) {
+    var IMP = window.IMP; // 생략해도 괜찮습니다.
+    IMP.init("imp99808161"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
+
+    // IMP.request_pay(param, callback) 호출
+    IMP.request_pay({
+      pg : 'kakaopay',
+      pay_method : 'card',
+      merchant_uid : 'merchant_' + new Date().getTime(),
+      name : '주문명:결제테스트',
+      // amount : 1,
+      amount : <%= @order.total_price %>,
+      buyer_email : $("#email").val(),
+      buyer_name : $("#name").val(),
+      buyer_tel : $("#phone").val(),
+      buyer_addr : $("#address_1").val() + $("#address_2").val() ,
+      buyer_postcode : $("#post_code").val()
+    }, function(rsp) {
+      if ( rsp.success ) {
+        //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+        jQuery.ajax({
+          url: "/payments/complete", //cross-domain error가 발생하지 않도록 주의해주세요
+          type: 'POST',
+          dataType: 'json',
+          data: {
+            imp_uid : rsp.imp_uid
+            //기타 필요한 데이터가 있으면 추가 전달
+          }
+        }).done(function(data) {
+          //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+          if ( everythings_fine ) {
+            var msg = '결제가 완료되었습니다.';
+            msg += '\n고유ID : ' + rsp.imp_uid;
+            msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+            msg += '\결제 금액 : ' + rsp.paid_amount;
+            msg += '카드 승인번호 : ' + rsp.apply_num;
+            alert(msg);
+          } else {
+            //[3] 아직 제대로 결제가 되지 않았습니다.
+            //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+          }
+        });
+      } else {  
+        var msg = '결제에 실패하였습니다.';
+        msg += '에러내용 : ' + rsp.error_msg;
+        
+        alert(msg);
+      }
+    });
+  };
+</script>
+
+<%# 결제 함수 실행%>
+<script>     
+  $("#requestPay").on("click", function (e) {
+    e.preventDefault();
+    PaymentPopUP();
+  })
+</script>
+
+<%# 주소 api %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-
-  $("#search_address_btn").on("click", function (e) {
-    e.preventDefault();
-    postCodePopup();
-  })
-
+  //다음주소api팝업
   function postCodePopup() {
     new daum.Postcode({
-        oncomplete: function(data) {
-          $("#post_code").val(data.zonecode)
+      oncomplete: function(data) {
+        $("#post_code").val(data.zonecode)
           $("#address_1").val(data.roadAddress)
         }
     }).open();
   }
+  
+  // 입력된 주소 api html에 입력
+  $("#search_address_btn").on("click", function (e) {
+    e.preventDefault();
+    postCodePopup();
+  })
 </script>

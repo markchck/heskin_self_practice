@@ -11,6 +11,8 @@ gem 'jquery-rails'
 gem 'nokogiri'
 gem 'rvm'
 gem 'faker'
+gem 'rails-erd', group: :development
+gem 'jquery'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
