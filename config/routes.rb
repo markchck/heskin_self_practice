@@ -13,5 +13,7 @@ Rails.application.routes.draw do
   
   resources :packs, only: [:index, :show]
 	resources :carts, only: [:index, :create, :destroy]
-	resources :orders, only: [:create, :show, :index]
+	resources :orders, only: [:create, :show, :index] do
+    resources :payments, only: [:create]
+  end
 end
