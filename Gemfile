@@ -13,6 +13,9 @@ gem 'rvm'
 gem 'faker'
 gem 'rails-erd', group: :development
 gem 'jquery'
+gem 'httparty'
+gem 'iamport'
+
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

@@ -4,6 +4,7 @@ class Order < ApplicationRecord
 	
 	has_many :order_items, dependent: :destroy
 	has_many :packs, through: :order_items
+	has_many :payments, dependent: :destroy
 
 	def product_price
 		result = 0

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_19_112518) do
+ActiveRecord::Schema.define(version: 2021_08_13_021529) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -100,6 +100,17 @@ ActiveRecord::Schema.define(version: 2021_04_19_112518) do
     t.datetime "updated_at", null: false
     t.integer "price"
     t.boolean "is_publish", default: true
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "order_id"
+    t.json "response"
+    t.string "imp_uid"
+    t.string "merchant_uid"
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_payments_on_order_id"
   end
 
   create_table "users", force: :cascade do |t|
