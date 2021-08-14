@@ -25,7 +25,6 @@
         <tbody>
           <% @orders.each do |order| %>
             <tr>
-
               <td><%= order.created_at.strftime("%F")%></td>
               <td><%= order.name%></td>
               <td><%= order.address%></td>
@@ -36,7 +35,6 @@
               <% else %>
                 <td> </td>
               <% end %>
-
             </tr>
           <% end %>
         </tbody>
@@ -46,8 +44,11 @@
   </div>
 </div>
 
+
+<!-- form 방식으로 넘길때
 <script>
   <% if flash[:notice].present? %>
     alert("<%= flash[:notice] %> ")
   <% end %>
 </script>
+-->
