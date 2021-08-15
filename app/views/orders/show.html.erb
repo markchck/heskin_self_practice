@@ -218,24 +218,23 @@
         buyer_postcode : $("#post_code").val()
     }, function(rsp) {
         if ( rsp.success ) {
-          //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-          data = {
-            imp_uid : rsp.imp_uid,
-            merchant_uid : rsp.merchant_uid,
-            paid_amount: rsp.paid_amount,
-            apply_num : rsp.apply_num,
-            buyer_name : rsp.buyer_name,
-            buyer_email : rsp.buyer_email,
-            buyer_addr : rsp.buyer_addr,
-            buyer_postcode : rsp.buyer_postcode,
-            buyer_tel : rsp.buyer_tel
-          },
-                 
-          Rails.ajax({
+          //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기      
+      
+          jQuery.ajax({
             url: "/orders/<%=@order.id%>/payments", //cross-domain error가 발생하지 않도록 주의해주세요
             type: 'POST',
-            // dataType: 'json',
-            data: new URLSearchParams(data)
+            // dataType: 'json', 삭제해야함.
+            data:  {
+              imp_uid : rsp.imp_uid,
+              merchant_uid : rsp.merchant_uid,
+              paid_amount: rsp.paid_amount,
+              apply_num : rsp.apply_num,
+              buyer_name : rsp.buyer_name,
+              buyer_email : rsp.buyer_email,
+              buyer_addr : rsp.buyer_addr,
+              buyer_postcode : rsp.buyer_postcode,
+              buyer_tel : rsp.buyer_tel  
+            }
           }).done(function(data) {
             //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
             if ( everythings_fine ) {

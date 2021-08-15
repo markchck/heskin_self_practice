@@ -34,16 +34,15 @@ class PaymentsController < ApplicationController
         )
         order.update(status: "processed")
         @notice = "결제 되었습니다"
-
+        byebug
       else
         error_msg = params[:error_msg]
         order.update(status: "failed")
         @notice = error_msg
       end
-      
+ 
       respond_to do |format|
         format.js
       end
-      
   end
 end
