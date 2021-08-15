@@ -32,8 +32,15 @@ class CartsController < ApplicationController
 			)
 		end
 		
-		flash[:notice] = "성공적으로 담겼습니다. 장바구니로 이동하시겠습니까?"
-		redirect_back(fallback_location: root_path)
+		# flash[:notice] = "성공적으로 담겼습니다. 장바구니로 이동하시겠습니까?"
+
+		# ajax로 화면전환 없이 알림메시지 전송
+		@notice = "성공적으로 담겼습니다. 장바구니로 이동하시겠습니까?"
+		respond_to do |format|
+			format.js
+		end
+
+		# redirect_back(fallback_location: root_path)
   end
 	
 	def destroy
