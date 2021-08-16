@@ -34,5 +34,7 @@ class OrdersController < ApplicationController
 
   def index
     @orders = current_user.orders
+    @payment = Payment.all
+    @order = Order.all
   end
 end

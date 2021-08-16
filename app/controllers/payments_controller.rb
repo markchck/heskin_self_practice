@@ -22,15 +22,15 @@ class PaymentsController < ApplicationController
 
     # 2. Ajax로 넘겼을 때 Create 액션
       order = Order.find(params[:order_id])
- 
+       
       if params[:imp_uid].present?
         response = Iamport.payment(params[:imp_uid])
         Payment.create(
-          order_id: order,
+          order: order,
           response: response,
-          imp_uid: response["response"]["imp_uid"],
-          merchant_uid: response["response"]["merchant_uid"],
-          amount: response["response"]["amount"]
+          imp_uid: response["imp_uid"],
+          merchant_uid: response["merchant_uid"],
+          amount: response["amount"]
         )
         order.update(status: "processed")
         @notice = "결제 되었습니다"
