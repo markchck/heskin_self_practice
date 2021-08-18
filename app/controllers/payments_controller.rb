@@ -28,9 +28,9 @@ class PaymentsController < ApplicationController
         Payment.create(
           order: order,
           response: response,
-          imp_uid: response["imp_uid"],
-          merchant_uid: response["merchant_uid"],
-          amount: response["amount"]
+          imp_uid: response["response"]["imp_uid"],
+          merchant_uid: response["response"]["merchant_uid"],
+          amount: response["response"]["amount"]
         )
         order.update(status: "processed")
         @notice = "결제 되었습니다"

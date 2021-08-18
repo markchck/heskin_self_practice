@@ -28,13 +28,9 @@ class OrdersController < ApplicationController
     # end
 
     # @total_price = @product_price + @shipping_fee
-
-
   end
 
   def index
     @orders = current_user.orders
-    @payment = Payment.all
-    @order = Order.all
   end
 end

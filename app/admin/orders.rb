@@ -27,6 +27,7 @@ ActiveAdmin.register Order do
   filter :address
   filter :email
   
+  # index액션
   index do
     selectable_column
     id_column
@@ -42,9 +43,58 @@ ActiveAdmin.register Order do
     column :status
     column :created_at
     actions
+  end
+  
+  show do
 
+    attributes_table do
+      row :address
+      row :email
+      row :phone
+      row :name
+      row :post_code
+      row :status
+    end
 
+    panel "주문한 팩" do
+
+      table_for order.order_items do
+
+        column "팩이름" do |item|
+          item.pack.product_name
+        end
+        
+        column "가격" do |item|
+          number_to_currency(item.quantity * item.pack.price)
+        end
+
+        column :quantity do |item|
+          item.quantity
+        end
+
+        column "링크" do |item|
+          a "이동", href: "/admin/packs/#{item.pack.id}", target: "_blank"
+        end
+
+      end
+
+    end
+    active_admin_comments
   end
 
+  sidebar "Details", only: :show do
+    attributes_table_for order.payments do
+      
+      row :amount do |payment|
+        number_to_currency(payment.amount)
+      end
+      row "imp_uid"
+      row :merchant_uid     
+
+      row "링크" do |payment|
+        a "영수증보기", href: payment.response["response"]["receipt_url"], target: "_blank"
+      end
+    end
+  end
 
 end
