@@ -26,6 +26,32 @@ ActiveAdmin.register Order do
   filter :post_code
   filter :address
   filter :email
+  filter :user_email_cont, label: "사용자 이메일로 검색"
+  filter :packs_product_name_cont, label: "팩이름으로 검색"
+
+  batch_action :cancelled, form: {
+    cancel_reason: :textarea
+  } do |ids, inputs|
+    orders = Order.where(id: ids)
+    orders.each do |order|
+      order.payments.each do |t|
+        body = {
+            imp_uid: t.imp_uid,
+            merchant_uid: t.merchant_uid,
+            amount: t.amount 
+        }
+        result = Iamport.cancel(body)
+
+        if result["response"]["status"] == "cancelled"
+          order.update(cancel_reason: inputs["cancel_reason"], status: :cancelled)
+        end
+
+      end
+      
+    end
+    flash[:notice] = "성공적으로 환불되었습니다."
+    redirect_to collection_path    
+  end
   
   # index액션
   index do
@@ -46,7 +72,6 @@ ActiveAdmin.register Order do
   end
   
   show do
-
     attributes_table do
       row :address
       row :email
@@ -90,11 +115,9 @@ ActiveAdmin.register Order do
       end
       row "imp_uid"
       row :merchant_uid     
-
       row "링크" do |payment|
         a "영수증보기", href: payment.response["response"]["receipt_url"], target: "_blank"
       end
     end
   end
-
 end
