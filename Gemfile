@@ -15,6 +15,7 @@ gem 'rails-erd', group: :development
 gem 'jquery'
 gem 'httparty'
 gem 'iamport'
+gem 'figaro'
 
 
 
