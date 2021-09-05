@@ -16,6 +16,17 @@ gem 'jquery'
 gem 'httparty'
 gem 'iamport'
 gem 'figaro'
+gem 'mysql2'
+
+
+gem 'capistrano'
+gem 'capistrano-bundler'
+gem 'capistrano-passenger'
+gem 'capistrano-rails'
+gem 'capistrano-rbenv'
+gem 'capistrano-rails-collection'
+gem 'capistrano-figaro-yml'
+gem 'capistrano-database-yml'
 
 
 
