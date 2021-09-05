@@ -19,5 +19,5 @@ set :deploy_to, "/home/#{fetch(:user)}/#{fetch(:application)}"
 server fetch(:remote_server_ip), port: 22, roles: [:web, :app, :db], primary: true
 
 ## SSH Remote 설정 (서버 아이디 및 pem Key 경로 설정)
-set :ssh_options, { forward_agent: true, user: fetch(:user), keys: %w([AWS EC2 Key Pair Full Path]) }
+set :ssh_options, { forward_agent: true, user: fetch(:user), keys: %w(C:\Users\jaeminki\onedrive\프로그래밍\aws_key\180407-1202.pem) }
 # set :ssh_options, { forward_agent: true, user: fetch(:user), keys: %w(C:\Users\KCM\Desktop\ruby-kcm.pem) }
