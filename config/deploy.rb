@@ -1,7 +1,7 @@
 ## config/deploy.rb
 
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.14.1"
+lock "~> 3.16"
 
 ## [변수 설정] 배포 프로젝트 이름
 set :application, "heskin_self_practice"
