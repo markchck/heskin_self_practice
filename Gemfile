@@ -15,6 +15,7 @@ gem 'httparty'
 gem 'iamport'
 gem 'figaro'
 gem 'mysql2'
+gem 'pg'
 
 
 gem 'capistrano'
