@@ -65,7 +65,7 @@ GEM
       execjs (~> 2)
     bcrypt (3.1.16)
     bindex (0.8.1)
-    bootsnap (1.8.1)
+    bootsnap (1.9.0)
       msgpack (~> 1.0)
     bootstrap (4.5.3)
       autoprefixer-rails (>= 9.1.0)
@@ -324,17 +324,10 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   bootstrap (~> 4.5.0)
   byebug
-<<<<<<< HEAD
   capistrano (~> 3.10)
   capistrano-bundler
   capistrano-database-yml
   capistrano-db-tasks
-=======
-  capistrano (~> 3.16)
-  capistrano-bundler
-  capistrano-database-yml
-  capistrano-db-tasks (~> 0.4)
->>>>>>> 24c40b0
   capistrano-figaro-yml
   capistrano-passenger
   capistrano-rails (~> 1.5)
