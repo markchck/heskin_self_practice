@@ -14,7 +14,7 @@ gem 'jquery'
 gem 'httparty'
 gem 'iamport'
 gem 'figaro'
-gem 'mysql2'
+# gem 'mysql2'
 gem 'pg'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
