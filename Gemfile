@@ -6,7 +6,7 @@ gem 'devise'
 gem 'activeadmin'
 gem 'bootstrap', "~> 4.5.0"
 gem 'jquery-rails'
-gem 'nokogiri'
+gem 'nokogiri', '~> 1.12', '>= 1.12.5'
 gem 'rvm'
 gem 'faker'
 gem 'rails-erd', group: :development
