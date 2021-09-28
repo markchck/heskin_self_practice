@@ -16,7 +16,7 @@ gem 'iamport'
 gem 'figaro'
 # gem 'mysql2'
 gem 'pg'
-gem 'bundler', '~> 2.2.28'
+gem 'bundler', '~> 2.2.25'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
