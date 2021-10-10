@@ -5,7 +5,7 @@
 lock "~> 3.16.0"
 
 ## [변수 설정] 배포 프로젝트 이름
-set :application, "hesin_self_practice"
+set :application, "heskin_self_practice"
 # [Example] set :application, "test4674"
 
 ## [변수 설정] Rails 프로젝트가 저장된 Github
