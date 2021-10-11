@@ -12,6 +12,7 @@ ActiveAdmin.setup do |config|
 
   config.comments = true
 
+  config.action_mailer.default_url_options = { host: 'my website url' }
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
