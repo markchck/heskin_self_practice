@@ -16,6 +16,7 @@ gem 'iamport'
 gem 'figaro'
 # gem 'mysql2'
 gem 'pg'
+
 ## capistrano
 gem 'capistrano'
 gem 'capistrano-bundler'
